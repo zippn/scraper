@@ -4,12 +4,14 @@
   "description": "Content Scraper for Treehouse",
   "main": "scraper.js",
   "dependencies": {
+    "content-scraper": "^1.0.2",
     "csv": "^2.0.0",
     "fs": "^0.0.1-security",
     "http": "^0.0.0",
     "https": "^1.0.0",
+    "json2csv": "^3.11.5",
     "path": "^0.12.7",
-    "website-scraper": "^3.3.2"
+    "require": "^2.4.20"
   },
   "devDependencies": {},
   "scripts": {
@@ -28,5 +30,7 @@
   "bugs": {
     "url": "https://github.com/zippn/scraper/issues"
   },
-  "homepage": "https://github.com/zippn/scraper#readme"
+  "homepage": "https://github.com/zippn/scraper#readme",
+  "scripts": { "start": "node scraper.js"}
+
 }
