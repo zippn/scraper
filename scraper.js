@@ -11,7 +11,7 @@ var data = [];
 var shirtArray = [];//Initial shirt storage
 var shirtToDo = [];//Processed
 
-
+console.log('Starting SCRAPPER');
 //Create directory if none exists
 checkDirectorySync(dir);
 
@@ -60,7 +60,7 @@ request(url, function(error, response, body ) {
 
                                     if (shirtToDo.indexOf(link) === -1) {//if link not in shirtArray
                                         shirtToDo.push(link);
-                                       // console.log(link);
+                                        // console.log(link);
 
                                     }
                                 });
@@ -111,7 +111,7 @@ request(url, function(error, response, body ) {
                                                 }); // End of json2csv method
                                             }
                                         } catch (error){
-                                                printErrorMessage(error);
+                                            printErrorMessage(error);
                                         }
                                     }); // End of request method
 
@@ -121,12 +121,15 @@ request(url, function(error, response, body ) {
                             }
 
                         }catch (error){
-                                printErrorMessage(error);
+                            printErrorMessage(error);
                         }
 
                     });
                 }
             });//shirtArray forEach
+
+        }else {
+            printErrorMessage(error);
 
         }
     }catch (error){
