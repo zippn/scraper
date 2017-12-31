@@ -70,7 +70,6 @@ request(url, function(error, response, body ) {
                                     //console.log('final '+item);
                                     request(item, function(error, response, body) {
 
-                                        try {
                                             if (response.statusCode == 200) {
                                                 /** Create jQuery like object */
                                                 var $ = cheerio.load(body);
@@ -111,10 +110,11 @@ request(url, function(error, response, body ) {
                                                     }); // End of json2csv method
                                                 }
 
+                                            }else {
+                                                printErrorMessage(error);
+
                                             }
-                                        } catch (error){
-                                            printErrorMessage(error);
-                                        }
+
                                     }); // End of request method
 
                                 });
