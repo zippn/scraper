@@ -19,7 +19,7 @@ function checkDirectorySync(directory) {
     try {
         fs.statSync(directory);
     } catch(e) {
-        console.log(e.message+'\nCreating the directory');
+        console.log('Creating the directory');
         fs.mkdirSync(directory);
     }
 }
