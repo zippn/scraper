@@ -26,7 +26,6 @@ function checkDirectorySync(directory) {
 //Scrape
 request(url, function(error, response, body ) {
     //console.log(body);
-    try{
         if(response.statusCode === 200) {
             const $ = cheerio.load(body);
             var shirts = $("a[href*='shirt']");
@@ -50,8 +49,7 @@ request(url, function(error, response, body ) {
                     //console.log('find more');
 
                     request(item, function (error, response, body) {
-                        try{
-                            if(response.statusCode === 200) {
+                        if(response.statusCode === 200) {
                                 const $ = cheerio.load(body);
                                 var shirts = $("a[href*='shirt.php']");//grab remaining shirts
 
@@ -60,6 +58,7 @@ request(url, function(error, response, body ) {
 
                                     if (shirtToDo.indexOf(link) === -1) {//if link not in shirtArray
                                         shirtToDo.push(link);
+                                        shirtArray.push(link);
                                         // console.log(link);
 
                                     }
@@ -68,7 +67,7 @@ request(url, function(error, response, body ) {
                                 //Convert to CSV
 
                                 shirtToDo.forEach(function (item, index) {
-                                    console.log('final '+item);
+                                    //console.log('final '+item);
                                     request(item, function(error, response, body) {
 
                                         try {
@@ -93,22 +92,25 @@ request(url, function(error, response, body ) {
 
 
                                                 /** Create csv file */
-                                                var dd = date.getDate();
-                                                var mm = date.getMonth() + 1 ;
-                                                var yyyy = date.getFullYear();
-                                                var csvFileName = yyyy + "-" + dd + "-" + mm + ".csv";
+                                                if(shirtToDo.length===shirtArray.length-1){
+                                                    var dd = date.getDate();
+                                                    var mm = date.getMonth() + 1 ;
+                                                    var yyyy = date.getFullYear();
+                                                    var csvFileName = yyyy + "-" + dd + "-" + mm + ".csv";
 
-                                                /** Convert json data into csv format using node module json2csv */
-                                                json2csv({data: data, fields: csvFields}, function (err, csv) {
+                                                    /** Convert json data into csv format using node module json2csv */
+                                                    json2csv({data: data, fields: csvFields}, function (err, csv) {
 
-                                                    if (err) throw err;
-                                                    /** If the data file for today already exists it should overwrite the file */
-                                                    fs.writeFile(dir + "/" + csvFileName, csv, function (err) {
                                                         if (err) throw err;
-                                                        console.log(csvFileName + ' created');
-                                                    }); //End fo writeFile
+                                                        /** If the data file for today already exists it should overwrite the file */
+                                                        fs.writeFile(dir + "/" + csvFileName, csv, function (err) {
+                                                            if (err) throw err;
+                                                            console.log(csvFileName + ' created');
+                                                        }); //End fo writeFile
 
-                                                }); // End of json2csv method
+                                                    }); // End of json2csv method
+                                                }
+
                                             }
                                         } catch (error){
                                             printErrorMessage(error);
@@ -118,9 +120,7 @@ request(url, function(error, response, body ) {
                                 });
 
 
-                            }
-
-                        }catch (error){
+                        }else{
                             printErrorMessage(error);
                         }
 
@@ -130,11 +130,9 @@ request(url, function(error, response, body ) {
 
         }else {
             printErrorMessage(error);
-
         }
-    }catch (error){
-        printErrorMessage(error);
-    }
+
+
 
 });
 function printErrorMessage(error) {
