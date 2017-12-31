@@ -35,6 +35,7 @@ request(url, function(error, response, body ) {
 
                 if(shirtArray.indexOf(link)===-1){//if link not in shirtArray
                     shirtArray.push(link);
+
                     //console.log(shirtArray);
 
                 }
