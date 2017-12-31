@@ -19,13 +19,13 @@ function checkDirectorySync(directory) {
     try {
         fs.statSync(directory);
     } catch(e) {
-        printErrorMessage(e.message);
+        console.log(e.message+'\nCreating the directory');
         fs.mkdirSync(directory);
     }
 }
 //Scrape
 request(url, function(error, response, body ) {
-
+    //console.log(body);
     try{
         if(response.statusCode === 200) {
             const $ = cheerio.load(body);
