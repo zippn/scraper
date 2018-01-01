@@ -27,7 +27,7 @@ function checkDirectorySync(directory) {
 //Scrape
 request(url, function(error, response, body ) {
     //console.log(body);
-        if(response.statusCode === 200) {
+        if(!error&&response.statusCode === 200) {
             const $ = cheerio.load(body);
             var shirts = $("a[href*='shirt']");
 
@@ -56,7 +56,7 @@ request(url, function(error, response, body ) {
                     //shirtCount -= 1;
 
                     request(item, function (error, response, body) {
-                        if(response.statusCode === 200) {
+                        if(!error&&response.statusCode === 200) {
                                 const $ = cheerio.load(body);
                                 var shirts = $("a[href*='shirt.php']");//grab remaining shirts
 
@@ -80,7 +80,7 @@ request(url, function(error, response, body ) {
                                     //console.log('final '+item);
                                     request(item, function(error, response, body) {
 
-                                            if (response.statusCode == 200) {
+                                            if (!error&&response.statusCode == 200) {
                                                 /** Create jQuery like object */
                                                 var $ = cheerio.load(body);
 
