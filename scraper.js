@@ -10,6 +10,7 @@ const errorFile = 'error.log';
 var data = [];
 var shirtArray = [];//Initial shirt storage
 var shirtToDo = [];//Processed
+var shirtCount = 0;
 
 console.log('Starting SCRAPPER');
 //Create directory if none exists
@@ -35,8 +36,8 @@ request(url, function(error, response, body ) {
 
                 if(shirtArray.indexOf(link)===-1){//if link not in shirtArray
                     shirtArray.push(link);
-
-                    //console.log(shirtArray);
+                    shirtCount += 1;
+                 //   console.log(shirtCount);
 
                 }
             });
@@ -44,10 +45,13 @@ request(url, function(error, response, body ) {
             shirtArray.forEach(function (item) {
                 if(item.indexOf('?id=')>0){//has ending query
                     shirtToDo.push(item);//add to be processed
-                    //console.log(item);
+                    shirtCount += 1;
+
+                    //console.log(shirtCount);
 
                 }else {//find more shirts
                     //console.log('find more');
+                    shirtCount -= 1;
 
                     request(item, function (error, response, body) {
                         if(response.statusCode === 200) {
@@ -60,7 +64,7 @@ request(url, function(error, response, body ) {
                                     if (shirtToDo.indexOf(link) === -1) {//if link not in shirtArray
                                         shirtToDo.push(link);
                                         shirtArray.push(link);
-                                        // console.log(link);
+                                       // console.log(data.length+' '+shirtArray.length);
 
                                     }
                                 });
@@ -92,7 +96,7 @@ request(url, function(error, response, body ) {
 
 
                                                 /** Create csv file */
-                                                if(shirtToDo.length===shirtArray.length-1){
+                                                if(data.length===shirtCount){
                                                     var dd = date.getDate();
                                                     var mm = date.getMonth() + 1 ;
                                                     var yyyy = date.getFullYear();
