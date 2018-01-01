@@ -36,17 +36,20 @@ request(url, function(error, response, body ) {
 
                 if(shirtArray.indexOf(link)===-1){//if link not in shirtArray
                     shirtArray.push(link);
-                 //   console.log(shirtCount);
+                    //console.log(link);
 
                 }
+
             });
 
             shirtArray.forEach(function (item) {
+                //console.log(item+' '+shirtCount);
+
                 if(item.indexOf('?id=')>0){//has ending query
                     shirtToDo.push(item);//add to be processed
                     shirtCount += 1;
 
-                    //console.log(shirtCount);
+                    //console.log(item+' '+shirtCount);
 
                 }else {//find more shirts
                     //console.log('find more');
@@ -62,7 +65,7 @@ request(url, function(error, response, body ) {
 
                                     if (shirtToDo.indexOf(link) === -1) {//if link not in shirtArray
                                         shirtToDo.push(link);
-                                        shirtArray.push(link);
+                                        //shirtArray.push(link);
                                        // console.log(data.length+' '+shirtArray.length);
                                         shirtCount += 1;
 
@@ -72,6 +75,8 @@ request(url, function(error, response, body ) {
                                 //Convert to CSV
 
                                 shirtToDo.forEach(function (item, index) {
+                                   // console.log(shirtToDo.length);
+
                                     //console.log('final '+item);
                                     request(item, function(error, response, body) {
 
@@ -130,6 +135,7 @@ request(url, function(error, response, body ) {
                         }
 
                     });
+
                 }
             });//shirtArray forEach
 
