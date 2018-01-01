@@ -36,7 +36,6 @@ request(url, function(error, response, body ) {
 
                 if(shirtArray.indexOf(link)===-1){//if link not in shirtArray
                     shirtArray.push(link);
-                    shirtCount += 1;
                  //   console.log(shirtCount);
 
                 }
@@ -51,7 +50,7 @@ request(url, function(error, response, body ) {
 
                 }else {//find more shirts
                     //console.log('find more');
-                    shirtCount -= 1;
+                    //shirtCount -= 1;
 
                     request(item, function (error, response, body) {
                         if(response.statusCode === 200) {
@@ -65,6 +64,7 @@ request(url, function(error, response, body ) {
                                         shirtToDo.push(link);
                                         shirtArray.push(link);
                                        // console.log(data.length+' '+shirtArray.length);
+                                        shirtCount += 1;
 
                                     }
                                 });
